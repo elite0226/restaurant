@@ -1,13 +1,12 @@
 import axios from 'src/utils/axios';
 
-const baseURL = '/api/restaurants';
+const baseURL = '/api/users';
 
-class RestaurantService {
-  getRestaurants = async (offset, limit, params) => {
+class UserService {
+  getUsers = async (offset, limit) => {
     try {
       const response = await axios.get(`${baseURL}`, {
         params: {
-          ...params,
           offset,
           limit,
         },
@@ -21,7 +20,7 @@ class RestaurantService {
     }
   };
 
-  createRestaurant = async (data) => {
+  addUser = async (data) => {
     try {
       const response = await axios.post(`${baseURL}`, data);
       if (response.status >= 200 && response.status < 300) {
@@ -31,11 +30,11 @@ class RestaurantService {
     } catch (error) {
       throw error;
     }
-  }
+  };
 
-  updateRestaurant = async (restaurantId, data) => {
+  updateUser = async (userId, data) => {
     try {
-      const response = await axios.put(`${baseURL}/${restaurantId}`, data);
+      const response = await axios.put(`${baseURL}/${userId}`, data);
       if (response.status >= 200 && response.status < 300) {
         return response.data;
       }
@@ -43,9 +42,21 @@ class RestaurantService {
     } catch (error) {
       throw error;
     }
-  }
+  };
+
+  deleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(`${baseURL}/${userId}`);
+      if (response.status >= 200 && response.status < 300) {
+        return true;
+      }
+      throw new Error(response.data);
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
-const restaurantService = new RestaurantService();
+const userService = new UserService();
 
-export default restaurantService;
+export default userService;
