@@ -78,6 +78,7 @@ function RestaurantsList() {
   };
 
   const handleCreateRestaurant = () => {
+    dispatch(setRestaurant({}));
     setRestaurantId('new');
     setOpenDialog(true);
   };
@@ -103,7 +104,7 @@ function RestaurantsList() {
       }, () => {
         snackbar.enqueueSnackbar('Delete a restaurant failed', { variant: 'error' });
       }));
-    })
+    });
   };
 
   return (
