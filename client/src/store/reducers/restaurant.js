@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { requestSuccess, requestFail } from 'src/utils/api';
-import { CREATE_RESTAURANT_REQUEST, GET_RESTAURANTS_REQUEST, SET_RESTAURANT, UPDATE_RESTAURANT_REQUEST } from '../types';
+import { CREATE_RESTAURANT_REQUEST, GET_RESTAURANTS_REQUEST, SET_RESTAURANT, DELETE_RESTAURANT_REQUEST, UPDATE_RESTAURANT_REQUEST } from '../types';
 
 const initialState = {
   restaurants: [],
@@ -51,6 +51,19 @@ export default createReducer(initialState, {
     restaurant: {},
     error: payload?.error,
     status: requestFail(UPDATE_RESTAURANT_REQUEST),
+  }),
+
+  [requestSuccess(DELETE_RESTAURANT_REQUEST)]: (state, { payload }) => {
+    const filteredItem = state.restaurants.filter((restaurant) => restaurant.id === payload.restaurantId);
+    state.restaurants = filteredItem
+    state.status = requestSuccess(DELETE_RESTAURANT_REQUEST);
+  },
+
+  [requestFail(DELETE_RESTAURANT_REQUEST)]: (state, { payload }) => ({
+    ...state,
+    restaurant: {},
+    error: payload?.error,
+    status: requestFail(DELETE_RESTAURANT_REQUEST),
   }),
 
   [SET_RESTAURANT]: (state, { payload }) => ({
