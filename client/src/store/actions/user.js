@@ -1,6 +1,6 @@
 import userService from 'src/services/userService';
 import { requestFail, requestPending, requestSuccess } from 'src/utils/api';
-import { GET_USERS_REQUEST, UPDATE_USER_REQUEST, DELETE_USER_REQUEST, ADD_USER_REQUEST } from '../types';
+import { GET_USERS_REQUEST, UPDATE_USER_REQUEST, DELETE_USER_REQUEST, ADD_USER_REQUEST, SET_USER } from '../types';
 
 export function getUsers(offset, limit) {
   return async (dispatch) => {
@@ -85,5 +85,14 @@ export function deleteUser(id, successCB, failedCB) {
       });
       failedCB && failedCB();
     }
+  };
+}
+
+export function setUser(user) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_USER,
+      payload: { user },
+    });
   };
 }

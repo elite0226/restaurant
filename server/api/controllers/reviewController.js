@@ -150,7 +150,7 @@ const remove = async (req, res) => {
     });
     await db.Restaurant.update(
       {
-        avgRating:
+        avgRating: restaurant.numberOfReviews === 1 ? 0 : 
           (restaurant.avgRating * restaurant.numberOfReviews - review.rating) /
           (restaurant.numberOfReviews - 1),
         numberOfReviews: restaurant.numberOfReviews - 1,

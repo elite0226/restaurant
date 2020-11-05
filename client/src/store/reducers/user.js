@@ -1,10 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { requestSuccess, requestFail } from 'src/utils/api';
-import { ADD_USER_REQUEST, GET_USERS_REQUEST, DELETE_USER_REQUEST, UPDATE_USER_REQUEST } from '../types';
+import { ADD_USER_REQUEST, GET_USERS_REQUEST, DELETE_USER_REQUEST, UPDATE_USER_REQUEST, SET_USER } from '../types';
 
 const initialState = {
   users: [],
+  user: {},
+  totalCount: 0,
   status: 'INIT',
   error: null,
 };
@@ -62,4 +64,10 @@ export default createReducer(initialState, {
     error: payload.error,
     status: requestFail(DELETE_USER_REQUEST),
   }),
+
+  [SET_USER]: (state, { payload }) => ({
+    ...state,
+    user: payload.user,
+    status: SET_USER,
+  })
 });
